@@ -36,6 +36,7 @@ class Perceptron(BinaryClassifier):
         Reset the internal state of the classifier.
         """
 
+        
         self.weights = 0    # our weight vector
         self.bias    = 0    # our bias
         self.numUpd  = 0    # number of updates made
@@ -71,16 +72,13 @@ class Perceptron(BinaryClassifier):
         We're guaranteed that Y is either +1 or -1.  We should update
         our weight vector and bias according to the perceptron rule.
         """
-
+        
         # check to see if we've made an error
         if Y * self.predict(X) <= 0:   ### SOLUTION-AFTER-IF
+            temp = Y*X
+            self.weights = add(self.weights, temp)    
+            self.bias = add(self.bias, Y)    
             self.numUpd  = self.numUpd  + 1
-
-            # perform an update
-            self.weights = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
-            self.bias    = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
 
     def nextIteration(self):
         """
