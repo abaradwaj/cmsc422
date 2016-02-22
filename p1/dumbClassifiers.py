@@ -59,7 +59,7 @@ class AlwaysPredictMostFrequent(BinaryClassifier):
         return the most frequent class!
         """
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        return self.mostFrequentClass
 
     def train(self, X, Y):
         '''
@@ -67,7 +67,7 @@ class AlwaysPredictMostFrequent(BinaryClassifier):
         '''
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        self.mostFrequentClass = util.mode(Y)
 
 class FirstFeatureClassifier(BinaryClassifier):
     """
@@ -95,8 +95,11 @@ class FirstFeatureClassifier(BinaryClassifier):
         check the first feature and make a classification decision based on it
         """
 
-        ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        if X[0] <= 0:
+            return self.classForNeg
+        else:
+            return self.classForPos
+ 
 
     def train(self, X, Y):
         '''
