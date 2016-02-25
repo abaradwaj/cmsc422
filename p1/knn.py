@@ -56,30 +56,35 @@ class KNN(BinaryClassifier):
 
         isKNN = self.opts['isKNN']     # true for KNN, false for epsilon balls
         N     = self.trX.shape[0]      # number of training examples
-
         if self.trY.size == 0:
             return 0                   # if we haven't trained yet, return 0
         elif isKNN:
             # this is a K nearest neighbor model
             # hint: look at the 'argsort' function in numpy
             K = self.opts['K']         # how many NN to use
+            
+            distance = self.getDistance(X)
+            sorted = argsort(distance)
+            subset = self.trY[sorted[0:K]]            
+            val = util.mode(subset)
+            # this is our return value: #pos - #neg of the K nearest neighbors of X
 
-            val = 0                    # this is our return value: #pos - #neg of the K nearest neighbors of X
-            ### TODO: YOUR CODE HERE
-            util.raiseNotDefined()
 
             return val
         else:
             # this is an epsilon ball model
             eps = self.opts['eps']     # how big is our epsilon ball
 
-            val = 0                    # this is our return value: #pos - #neg within and epsilon ball of X
-            ### TODO: YOUR CODE HERE
-            util.raiseNotDefined()
+            distance = self.getDistance(X)
+            eps_ball = self.trY[distance <= eps]
+            val = util.mode(eps_ball)            
+            # this is our return value: #pos - #neg within and epsilon ball of X
+            
             return val
                 
             
-
+    def getDistance(self, X):
+        return sqrt(((X-self.trX)**2).sum(axis=1))
 
     def getRepresentation(self):
         """
