@@ -65,7 +65,7 @@ class DT(BinaryClassifier):
         """
 
         ### TODO: YOUR CODE HERE
-        if self.isLeaf == True:
+        if self.isLeaf != True:
             if X < 0.5:
                 self.predict(self.left, X)
             else:
