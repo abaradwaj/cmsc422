@@ -65,7 +65,13 @@ class DT(BinaryClassifier):
         """
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        if self.isLeaf == True:
+            if X < 0.5:
+                self.predict(self.left, X)
+            else:
+                self.predict(self.right, X)
+        else:
+            return self.label
 
     def trainDT(self, X, Y, maxDepth, used):
         """
@@ -80,9 +86,9 @@ class DT(BinaryClassifier):
         if maxDepth <= 0 or len(util.uniq(Y)) <= 1:
             # we'd better end at this point.  need to figure
             # out the label to return
-            self.isLeaf = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            self.isLeaf = True    ### TODO: YOUR CODE HERE
 
-            self.label  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            self.label  = 1    ### TODO: YOUR CODE HERE
 
 
         else:
@@ -118,7 +124,7 @@ class DT(BinaryClassifier):
                 self.label  = util.mode(Y)
 
             else:
-                self.isLeaf  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                self.isLeaf  = False    ### TODO: YOUR CODE HERE
 
                 self.feature = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
 
@@ -131,8 +137,8 @@ class DT(BinaryClassifier):
                 #   self.right.trainDT(...) 
                 # with appropriate arguments
                 ### TODO: YOUR CODE HERE
-                util.raiseNotDefined()
-
+                # self.trainDT(self, X, Y, , used) #?
+                print("Finished")
     def train(self, X, Y):
         """
         Build a decision tree based on the data from X and Y.  X is a
