@@ -88,8 +88,7 @@ class DT(BinaryClassifier):
             # out the label to return
             self.isLeaf = True    ### TODO: YOUR CODE HERE
 
-            self.label  = 1    ### TODO: YOUR CODE HERE
-
+            self.label  = util.mode(Y)    ### TODO: YOUR CODE HERE
 
         else:
             # we need to find a feature to split on
@@ -102,9 +101,8 @@ class DT(BinaryClassifier):
 
                 # suppose we split on this feature; what labels
                 # would go left and right?
-                leftY  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
-                rightY = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                leftY  = Y[X[:, d] < 0.5] ### TODO: YOUR CODE HERE
+                rightY = Y[X[:, d] >= 0.5] ### TODO: YOUR CODE HERE
 
 
                 # we'll classify the left points as their most
