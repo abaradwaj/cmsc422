@@ -94,21 +94,29 @@ class DT(BinaryClassifier):
             # we need to find a feature to split on
             bestFeature = -1     # which feature has lowest error
             bestError   = N      # the number of errors for this feature
-            for d in range(D):
+            for d in range(D): # Index
                 # have we used this feature yet
                 if d in used:
                     continue
 
+                print "Printing d"
+                print d
                 # suppose we split on this feature; what labels
                 # would go left and right?
-                leftY  = Y[X[:, d] < 0.5] ### TODO: YOUR CODE HERE
-                rightY = Y[X[:, d] >= 0.5] ### TODO: YOUR CODE HERE
+                print "About to print X"
+                print X
 
+                print "About to print Y"
+                print Y
+                leftY  = Y[X[d] < 0.5] ### TODO: YOUR CODE HERE
+                rightY = Y[X[d] >= 0.5] ### TODO: YOUR CODE HERE
+                print "Printing leftY"
+                print leftY
 
                 # we'll classify the left points as their most
                 # common class and ditto right points.  our error
                 # is the how many are not their mode.
-                error = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                error = 2    ### TODO: YOUR CODE HERE
 
 
                 # check to see if this is a better error rate
@@ -124,19 +132,24 @@ class DT(BinaryClassifier):
             else:
                 self.isLeaf  = False    ### TODO: YOUR CODE HERE
 
-                self.feature = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                self.feature = bestFeature    ### TODO: YOUR CODE HERE
 
 
                 self.left  = DT({'maxDepth': maxDepth-1})
                 self.right = DT({'maxDepth': maxDepth-1})
                 # recurse on our children by calling
-                #   self.left.trainDT(...) 
+                #   self.left.trainDT(...)
                 # and
-                #   self.right.trainDT(...) 
+                #   self.right.trainDT(...)
                 # with appropriate arguments
                 ### TODO: YOUR CODE HERE
-                # self.trainDT(self, X, Y, , used) #?
-                print("Finished")
+                leftD = X[X[self.feature] < 0.5]
+                rightD = X[X[self.feature] >= 0.5]
+                # redefine labels with the best feature
+                leftY = Y[X[self.feature] < 0.5]
+                rightY = Y[X[self.feature] >= 0.5]
+                self.left.trainDT(leftD, leftY, (maxDepth - 1), used.append(self.feature));
+                self.right.trainDT(rightD, rightY, (maxDepth - 1), used.append(self.feature));
     def train(self, X, Y):
         """
         Build a decision tree based on the data from X and Y.  X is a
