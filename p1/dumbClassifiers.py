@@ -107,4 +107,16 @@ class FirstFeatureClassifier(BinaryClassifier):
         '''
 
         ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        greater = []
+        lesser = []
+        temp = X[:,0] > 0
+        for i in range(temp.size):
+            if temp[i]:
+                greater.append(Y[i])
+            else:
+                lesser.append(Y[i])
+
+        self.classForNeg = util.mode(lesser)
+        self.classForPos = util.mode(greater)
+        
+        
