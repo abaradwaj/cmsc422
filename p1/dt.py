@@ -120,8 +120,7 @@ class DT(BinaryClassifier):
                 # we'll classify the left points as their most
                 # common class and ditto right points.  our error
                 # is the how many are not their mode.
-                error = size((leftY!=util.mode(leftY)).nonzero) + size((rightY!=util.mode(rightY)).nonzero())
-
+                error = size((leftY!=util.mode(leftY)).nonzero()) + size((rightY!=util.mode(rightY)).nonzero())
 
                 # check to see if this is a better error rate
                 if error <= bestError:
