@@ -63,8 +63,6 @@ class DT(BinaryClassifier):
         at 0.5, so <0.5 means left branch and >=0.5 means right
         branch.
         """
-
-        ### TODO: YOUR CODE HERE
         if self.isLeaf != True:
             if X < 0.5:
                 self.predict(self.left, X)
@@ -77,7 +75,7 @@ class DT(BinaryClassifier):
         """
         recursively build the decision tree
         """
-        print used
+        # print used
         # get the size of the data set
         N,D = X.shape
 
@@ -86,9 +84,9 @@ class DT(BinaryClassifier):
         if maxDepth <= 0 or len(util.uniq(Y)) <= 1:
             # we'd better end at this point.  need to figure
             # out the label to return
-            self.isLeaf = True    ### TODO: YOUR CODE HERE
+            self.isLeaf = True
 
-            self.label  = util.mode(Y)    ### TODO: YOUR CODE HERE
+            self.label  = util.mode(Y)
 
         else:
             # we need to find a feature to split on
@@ -98,31 +96,31 @@ class DT(BinaryClassifier):
                 # have we used this feature yet
                 if d in used:
                     continue
-                print "New entry\n"
-                print "Printing d = feature to be tested"
-                print d
+                # print "New entry\n"
+                # print "Printing d = feature to be tested"
+                # print d
                 # suppose we split on this feature; what labels
                 # would go left and right?
-                print "About to print X"
-                print X
-
-                print "About to print Y"
-                print Y
-
+                # print "About to print X"
+                # print X
+                #
+                # print "About to print Y"
+                # print Y
+                #
                 xFiltered = X[:,d]
-                print "About to print xFiltered"
-                print xFiltered
+                # print "About to print xFiltered"
+                # print xFiltered
                 # numpy.delete(X, d)
                 leftY  = Y[xFiltered < 0.5] # Filter tuples with d
                 rightY = Y[xFiltered >= 0.5]
 
-                print "Printing leftY"
-                print leftY
+                # print "Printing leftY"
+                # print leftY
 
                 # we'll classify the left points as their most
                 # common class and ditto right points.  our error
                 # is the how many are not their mode.
-                error = 2    ### TODO: YOUR CODE HERE
+                error = size((leftY!=util.mode(leftY)).nonzero) + size((rightY!=util.mode(rightY)).nonzero())
 
 
                 # check to see if this is a better error rate
@@ -139,8 +137,8 @@ class DT(BinaryClassifier):
                 self.isLeaf  = False    ### TODO: YOUR CODE HERE
 
                 self.feature = bestFeature    ### TODO: YOUR CODE HERE
-                print "Feature:"
-                print repr(self.feature)
+                # print "Feature:"
+                # print repr(self.feature)
 
                 self.left  = DT({'maxDepth': maxDepth-1})
                 self.right = DT({'maxDepth': maxDepth-1})
