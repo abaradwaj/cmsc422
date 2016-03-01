@@ -149,12 +149,14 @@ class DT(BinaryClassifier):
                 # and
                 #   self.right.trainDT(...)
                 # with appropriate arguments
-                ### TODO: YOUR CODE HERE
-                leftD = X[X[:, self.feature] < 0.5]
-                rightD = X[X[:, self.feature] >= 0.5]
+                xFiltered = X[:, self.feature]
+
+                leftD = X[xFiltered < 0.5]
+                rightD = X[xFiltered >= 0.5]
                 # redefine labels with the best feature
-                leftY = Y[X[:, self.feature] < 0.5]
-                rightY = Y[X[:, self.feature] >= 0.5]
+                leftY = Y[xFiltered < 0.5]
+                rightY = Y[xFiltered >= 0.5]
+
                 self.left.trainDT(leftD, leftY, (maxDepth - 1), used + [self.feature]);
                 self.right.trainDT(rightD, rightY, (maxDepth - 1), used + [self.feature]);
     def train(self, X, Y):
