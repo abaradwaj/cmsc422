@@ -9,3 +9,11 @@ print(h)
 h.train(datasets.TennisData.X, datasets.TennisData.Y)
 print(h)
 
+h = dt.DT({'maxDepth': 2})
+h.train(datasets.TennisData.X, datasets.TennisData.Y)
+print(h)
+
+h = dt.DT({'maxDepth': 5})
+h.train(datasets.TennisData.X, datasets.TennisData.Y)
+print(h)
+
