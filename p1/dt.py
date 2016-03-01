@@ -77,7 +77,7 @@ class DT(BinaryClassifier):
         """
         recursively build the decision tree
         """
-
+        print used
         # get the size of the data set
         N,D = X.shape
 
@@ -98,8 +98,8 @@ class DT(BinaryClassifier):
                 # have we used this feature yet
                 if d in used:
                     continue
-
-                print "Printing d"
+                print "New entry\n"
+                print "Printing d = feature to be tested"
                 print d
                 # suppose we split on this feature; what labels
                 # would go left and right?
@@ -108,8 +108,14 @@ class DT(BinaryClassifier):
 
                 print "About to print Y"
                 print Y
-                leftY  = Y[X[d] < 0.5] ### TODO: YOUR CODE HERE
-                rightY = Y[X[d] >= 0.5] ### TODO: YOUR CODE HERE
+
+                xFiltered = X[:,d]
+                print "About to print xFiltered"
+                print xFiltered
+                # numpy.delete(X, d)
+                leftY  = Y[xFiltered < 0.5] # Filter tuples with d
+                rightY = Y[xFiltered >= 0.5]
+
                 print "Printing leftY"
                 print leftY
 
@@ -133,7 +139,8 @@ class DT(BinaryClassifier):
                 self.isLeaf  = False    ### TODO: YOUR CODE HERE
 
                 self.feature = bestFeature    ### TODO: YOUR CODE HERE
-
+                print "Feature:"
+                print repr(self.feature)
 
                 self.left  = DT({'maxDepth': maxDepth-1})
                 self.right = DT({'maxDepth': maxDepth-1})
@@ -143,13 +150,13 @@ class DT(BinaryClassifier):
                 #   self.right.trainDT(...)
                 # with appropriate arguments
                 ### TODO: YOUR CODE HERE
-                leftD = X[X[self.feature] < 0.5]
-                rightD = X[X[self.feature] >= 0.5]
+                leftD = X[X[:, self.feature] < 0.5]
+                rightD = X[X[:, self.feature] >= 0.5]
                 # redefine labels with the best feature
-                leftY = Y[X[self.feature] < 0.5]
-                rightY = Y[X[self.feature] >= 0.5]
-                self.left.trainDT(leftD, leftY, (maxDepth - 1), used.append(self.feature));
-                self.right.trainDT(rightD, rightY, (maxDepth - 1), used.append(self.feature));
+                leftY = Y[X[:, self.feature] < 0.5]
+                rightY = Y[X[:, self.feature] >= 0.5]
+                self.left.trainDT(leftD, leftY, (maxDepth - 1), used + [self.feature]);
+                self.right.trainDT(rightD, rightY, (maxDepth - 1), used + [self.feature]);
     def train(self, X, Y):
         """
         Build a decision tree based on the data from X and Y.  X is a
