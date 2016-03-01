@@ -65,8 +65,8 @@ class KNN(BinaryClassifier):
             
             distance = self.getDistance(X)
             sorted = argsort(distance)
-            subset = self.trY[sorted[0:K]]            
-            val = util.mode(subset)
+            k_nearest = self.trY[sorted[0:K]]            
+            val = util.mode(k_nearest)
             # this is our return value: #pos - #neg of the K nearest neighbors of X
 
 
@@ -84,7 +84,7 @@ class KNN(BinaryClassifier):
                 
             
     def getDistance(self, X):
-        return sqrt(((X-self.trX)**2).sum(axis=1))
+        return sqrt(sum((X-self.trX)**2, axis=1))
 
     def getRepresentation(self):
         """
