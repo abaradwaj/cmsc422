@@ -85,7 +85,6 @@ class DT(BinaryClassifier):
             # we'd better end at this point.  need to figure
             # out the label to return
             self.isLeaf = True
-
             self.label  = util.mode(Y)
 
         else:
@@ -107,12 +106,17 @@ class DT(BinaryClassifier):
                 # print "About to print Y"
                 # print Y
                 #
-                xFiltered = X[:,d]
-                # print "About to print xFiltered"
-                # print xFiltered
-                # numpy.delete(X, d)
-                leftY  = Y[xFiltered < 0.5] # Filter tuples with d
-                rightY = Y[xFiltered >= 0.5]
+                # xFiltered = X[:,d]
+                # # print "About to print xFiltered"
+                # # print xFiltered
+                # # numpy.delete(X, d)
+                # leftY  = Y[xFiltered < 0.5] # Filter tuples with d
+                # rightY = Y[xFiltered >= 0.5]
+
+                leftY  = Y[X[:, d] < 0.5]
+                rightY = Y[X[:, d] >= 0.5]
+
+                # return
 
                 # print "Printing leftY"
                 # print leftY
@@ -133,9 +137,8 @@ class DT(BinaryClassifier):
                 self.label  = util.mode(Y)
 
             else:
-                self.isLeaf  = False    ### TODO: YOUR CODE HERE
-
-                self.feature = bestFeature    ### TODO: YOUR CODE HERE
+                self.isLeaf  = False
+                self.feature = bestFeature # To maximize accuracy
                 # print "Feature:"
                 # print repr(self.feature)
 
@@ -146,16 +149,12 @@ class DT(BinaryClassifier):
                 # and
                 #   self.right.trainDT(...)
                 # with appropriate arguments
-                xFiltered = X[:, self.feature]
 
-                leftD = X[xFiltered < 0.5]
-                rightD = X[xFiltered >= 0.5]
-                # redefine labels with the best feature
-                leftY = Y[xFiltered < 0.5]
-                rightY = Y[xFiltered >= 0.5]
+                leftY  = Y[X[:, self.feature] < 0.5]
+                rightY = Y[X[:, self.feature] >= 0.5]
 
-                self.left.trainDT(leftD, leftY, (maxDepth - 1), used + [self.feature]);
-                self.right.trainDT(rightD, rightY, (maxDepth - 1), used + [self.feature]);
+                self.left.trainDT(X[X[:, self.feature] < 0.5], leftY, (maxDepth - 1), used + [self.feature]);
+                self.right.trainDT(X[X[:, self.feature] >= 0.5], rightY, (maxDepth - 1), used + [self.feature]);
     def train(self, X, Y):
         """
         Build a decision tree based on the data from X and Y.  X is a
