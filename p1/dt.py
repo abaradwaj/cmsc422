@@ -69,7 +69,7 @@ class DT(BinaryClassifier):
             else:
                 self.right.predict(X)
         else:
-            return self.label
+            return repr(self.label)
 
     def trainDT(self, X, Y, maxDepth, used):
         """
