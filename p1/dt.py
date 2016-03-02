@@ -63,13 +63,10 @@ class DT(BinaryClassifier):
         at 0.5, so <0.5 means left branch and >=0.5 means right
         branch.
         """
-        if self.isLeaf != True:
-            if X[self.feature] < 0.5:
-                self.left.predict(X)
-            else:
-                self.right.predict(X)
+        if self.isLeaf: return repr(self.label)
         else:
-            return repr(self.label)
+            if X[self.feature] < 0.5: return self.left.predict(X)
+            else: return self.right.predict(X)
 
     def trainDT(self, X, Y, maxDepth, used):
         """
@@ -95,32 +92,10 @@ class DT(BinaryClassifier):
                 # have we used this feature yet
                 if d in used:
                     continue
-                # print "New entry\n"
-                # print "Printing d = feature to be tested"
-                # print d
-                # suppose we split on this feature; what labels
-                # would go left and right?
-                # print "About to print X"
-                # print X
-                #
-                # print "About to print Y"
-                # print Y
-                #
-                # xFiltered = X[:,d]
-                # # print "About to print xFiltered"
-                # # print xFiltered
-                # # numpy.delete(X, d)
-                # leftY  = Y[xFiltered < 0.5] # Filter tuples with d
-                # rightY = Y[xFiltered >= 0.5]
 
-                leftY  = Y[X[:, d] < 0.5]
-                rightY = Y[X[:, d] >= 0.5]
-
-                # return
-
-                # print "Printing leftY"
-                # print leftY
-
+                xFiltered = X[:, self.feature]
+                leftY  = Y[xFiltered < 0.5]
+                rightY = Y[xFiltered >= 0.5]
                 # we'll classify the left points as their most
                 # common class and ditto right points.  our error
                 # is the how many are not their mode.
@@ -150,8 +125,9 @@ class DT(BinaryClassifier):
                 #   self.right.trainDT(...)
                 # with appropriate arguments
 
-                leftY  = Y[X[:, self.feature] < 0.5]
-                rightY = Y[X[:, self.feature] >= 0.5]
+                xFiltered = X[:, self.feature]
+                leftY  = Y[xFiltered < 0.5]
+                rightY = Y[xFiltered >= 0.5]
 
                 self.left.trainDT(X[X[:, self.feature] < 0.5], leftY, (maxDepth - 1), used + [self.feature]);
                 self.right.trainDT(X[X[:, self.feature] >= 0.5], rightY, (maxDepth - 1), used + [self.feature]);
