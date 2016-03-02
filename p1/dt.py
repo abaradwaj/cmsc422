@@ -63,15 +63,18 @@ class DT(BinaryClassifier):
         at 0.5, so <0.5 means left branch and >=0.5 means right
         branch.
         """
-
-        ### TODO: YOUR CODE HERE
-        util.raiseNotDefined()
+        if self.isLeaf == False:
+            if X[self.feature] < 0.5:
+                return self.left.predict(X)
+            else: return self.right.predict(X)
+        else:
+            return repr(self.label)
 
     def trainDT(self, X, Y, maxDepth, used):
         """
         recursively build the decision tree
         """
-
+        # print used
         # get the size of the data set
         N,D = X.shape
 
@@ -80,32 +83,25 @@ class DT(BinaryClassifier):
         if maxDepth <= 0 or len(util.uniq(Y)) <= 1:
             # we'd better end at this point.  need to figure
             # out the label to return
-            self.isLeaf = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
-            self.label  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
+            self.isLeaf = True
+            self.label  = util.mode(Y)
 
         else:
             # we need to find a feature to split on
             bestFeature = -1     # which feature has lowest error
             bestError   = N      # the number of errors for this feature
-            for d in range(D):
+            for d in range(D): # Index
                 # have we used this feature yet
                 if d in used:
                     continue
 
-                # suppose we split on this feature; what labels
-                # would go left and right?
-                leftY  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
-                rightY = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
-
+                xFiltered = X[:, d]
+                leftY  = Y[xFiltered < 0.5]
+                rightY = Y[xFiltered >= 0.5]
                 # we'll classify the left points as their most
                 # common class and ditto right points.  our error
                 # is the how many are not their mode.
-                error = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
+                error = size((leftY!=util.mode(leftY)).nonzero()) + size((rightY!=util.mode(rightY)).nonzero())
 
                 # check to see if this is a better error rate
                 if error <= bestError:
@@ -118,21 +114,25 @@ class DT(BinaryClassifier):
                 self.label  = util.mode(Y)
 
             else:
-                self.isLeaf  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
-                self.feature = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
-
+                self.isLeaf  = False
+                self.feature = bestFeature # To maximize accuracy
+                # print "Feature:"
+                # print repr(self.feature)
 
                 self.left  = DT({'maxDepth': maxDepth-1})
                 self.right = DT({'maxDepth': maxDepth-1})
                 # recurse on our children by calling
-                #   self.left.trainDT(...) 
+                #   self.left.trainDT(...)
                 # and
-                #   self.right.trainDT(...) 
+                #   self.right.trainDT(...)
                 # with appropriate arguments
-                ### TODO: YOUR CODE HERE
-                util.raiseNotDefined()
 
+                xFiltered = X[:, self.feature]
+                leftY  = Y[xFiltered < 0.5]
+                rightY = Y[xFiltered >= 0.5]
+
+                self.left.trainDT(X[X[:, self.feature] < 0.5], leftY, (maxDepth - 1), used + [self.feature]);
+                self.right.trainDT(X[X[:, self.feature] >= 0.5], rightY, (maxDepth - 1), used + [self.feature]);
     def train(self, X, Y):
         """
         Build a decision tree based on the data from X and Y.  X is a
