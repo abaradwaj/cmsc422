@@ -95,7 +95,7 @@ class DT(BinaryClassifier):
                 if d in used:
                     continue
 
-                xFiltered = X[:, self.feature]
+                xFiltered = X[:, d]
                 leftY  = Y[xFiltered < 0.5]
                 rightY = Y[xFiltered >= 0.5]
                 # we'll classify the left points as their most
