@@ -172,9 +172,9 @@ class LinearClassifier(BinaryClassifier):
         # define our objective function based on loss, lambd and (X,Y)
         def func(w):
             # should compute obj = loss(w) + (lambd/2) * norm(w)^2
-            Yhat = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            Yhat = util.raiseNotDefined()    #w^Tx+b - conditional ### TODO: YOUR CODE HERE
 
-            obj  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            obj  = loss(w) + (lambd/2) * norm(w)^2    ### TODO: YOUR CODE HERE
 
             # return the objective
             return obj
@@ -184,7 +184,7 @@ class LinearClassifier(BinaryClassifier):
             # should compute gr = grad(w) + lambd * w
             Yhat = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
 
-            gr   = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+            gr   = grad(w) + lambd * w    ### TODO: YOUR CODE HERE
 
             return gr
 
