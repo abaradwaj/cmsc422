@@ -62,7 +62,7 @@ class LogisticLoss(LossFunction):
         The true values are in the vector Y; the predicted values are
         in Yhat; compute the loss associated with these predictions.
         """
-        return dot(log(1+ exp(Y - Yhat, Y - Yhat)))
+        return dot(log(1+ exp(-Y * Yhat)))
 
 
     def lossGradient(self, X, Y, Yhat):
