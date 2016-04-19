@@ -6,4 +6,4 @@ runClassifier.trainTestSet(f, datasets.TwoDAxisAligned)
 f
 # w=array([ 2.73466371, -0.29563932])
 mlGraphics.plotLinearClassifier(f, datasets.TwoDAxisAligned.X, datasets.TwoDAxisAligned.Y)
-show(False)
+# show(False)
