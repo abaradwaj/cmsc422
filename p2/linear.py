@@ -169,11 +169,8 @@ class LinearClassifier(BinaryClassifier):
         # define our objective function based on loss, lambd and (X,Y)
         def func(w):
             # should compute obj = loss(w) + (lambd/2) * norm(w)^2
-            Yhat = w   #w^Tx+b - conditional ### TODO: YOUR CODE HERE
-            # print("About to print w")
-            # print(w)
-            # print("Printed")
-            obj  = lossFn.loss(Y, Y) + (lambd/2) * norm(w)**2    ### TODO: YOUR CODE HERE
+            Yhat = sum(w*X, axis=1)   #w^Tx+b - conditional ### TODO: YOUR CODE HERE
+            obj  = lossFn.loss(Y, Yhat) + (lambd/2) * dot(w,w)    ### TODO: YOUR CODE HERE
 
             # return the objective
             return obj
@@ -181,9 +178,8 @@ class LinearClassifier(BinaryClassifier):
         # define our gradient function based on loss, lambd and (X,Y)
         def grad(w):
             # should compute gr = grad(w) + lambd * w
-            Yhat = 1    ### TODO: YOUR CODE HERE
-
-            gr   = grad(w) + lambd * w    ### TODO: YOUR CODE HERE
+            Yhat = sum(w*X, axis=1)    ### TODO: YOUR CODE HERE
+            gr   = lossFn.lossGradient(X, Y, Yhat) + lambd*w    ### TODO: YOUR CODE HERE
 
             return gr
 

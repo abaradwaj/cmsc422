@@ -12,7 +12,7 @@ from numpy import *
 
 # gd.gd(lambda x: x**2, lambda x: 2*x, 10, 10, 0.2)
 # x, trajectory = gd.gd(lambda x: x**2, lambda x: 2*x, 10, 100, 0.2)
-# x
+# print(x)
 # plot(trajectory)
 # show(False)
 
