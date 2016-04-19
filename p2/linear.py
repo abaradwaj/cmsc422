@@ -16,7 +16,7 @@ class LossFunction:
         in Yhat; compute the loss associated with these predictions.
         """
 
-        # util.raiseNotDefined()
+        return 0.5
 
     def lossGradient(self, X, Y, Yhat):
         """
@@ -25,7 +25,7 @@ class LossFunction:
         gradient of the loss associated with these predictions.
         """
 
-        # util.raiseNotDefined()
+        return 0.5
 
 
 class SquaredLoss(LossFunction):
@@ -173,7 +173,7 @@ class LinearClassifier(BinaryClassifier):
             # print("About to print w")
             # print(w)
             # print("Printed")
-            obj  = lossFn(w) + (lambd/2) * norm(w)^2    ### TODO: YOUR CODE HERE
+            obj  = lossFn.loss(Y, Y) + (lambd/2) * norm(w)**2    ### TODO: YOUR CODE HERE
 
             # return the objective
             return obj
