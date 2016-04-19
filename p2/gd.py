@@ -28,7 +28,6 @@ def gd(func, grad, x0, numIter, stepSize):
         # compute the gradient at the current location
         g = grad(x)
 
-
         # compute the step size
         eta = stepSize/math.sqrt(iter+1)
 

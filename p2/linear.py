@@ -62,9 +62,7 @@ class LogisticLoss(LossFunction):
         The true values are in the vector Y; the predicted values are
         in Yhat; compute the loss associated with these predictions.
         """
-
-        ### TODO: YOUR CODE HERE
-        return 0.5 * dot(Y - Yhat, Y - Yhat)
+        return dot(log(1+ exp(Y - Yhat, Y - Yhat)))
 
 
     def lossGradient(self, X, Y, Yhat):
@@ -171,8 +169,10 @@ class LinearClassifier(BinaryClassifier):
         # define our objective function based on loss, lambd and (X,Y)
         def func(w):
             # should compute obj = loss(w) + (lambd/2) * norm(w)^2
-            Yhat = 1    #w^Tx+b - conditional ### TODO: YOUR CODE HERE
-
+            Yhat = w   #w^Tx+b - conditional ### TODO: YOUR CODE HERE
+            # print("About to print w")
+            # print(w)
+            # print("Printed")
             obj  = lossFn(w) + (lambd/2) * norm(w)^2    ### TODO: YOUR CODE HERE
 
             # return the objective
