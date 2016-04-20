@@ -72,8 +72,7 @@ class LogisticLoss(LossFunction):
         gradient of the loss associated with these predictions.
         """
 
-        ### TODO: YOUR CODE HERE
-        return - sum((Y - Yhat) * X.T, axis=1)
+        return sum(-Y * X.T * exp(-Y * Yhat)/(1 + exp(-Y * Yhat)), axis=1)
 
 
 class HingeLoss(LossFunction):
