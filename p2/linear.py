@@ -170,8 +170,8 @@ class LinearClassifier(BinaryClassifier):
         # define our objective function based on loss, lambd and (X,Y)
         def func(w):
             # should compute obj = loss(w) + (lambd/2) * norm(w)^2
-            Yhat = sum(w*X, axis=1)   #w^Tx+b - conditional ### TODO: YOUR CODE HERE
-            obj  = lossFn.loss(Y, Yhat) + (lambd/2) * norm(w)**2    ### TODO: YOUR CODE HERE
+            Yhat = sum(w * X, axis=1)   #w^Tx+b - conditional
+            obj  = lossFn.loss(Y, Yhat) + (0.5 * lambd) * (norm(w) ** 2)
 
             # return the objective
             return obj
