@@ -87,8 +87,9 @@ class HingeLoss(LossFunction):
         in Yhat; compute the loss associated with these predictions.
         """
 
-        ### TODO: YOUR CODE HERE
-        return 0.5 * dot(Y - Yhat, Y - Yhat)
+        right = 1 - (Y * Yhat)
+        filtered = right > 0
+        return sum(right[filtered])
 
     def lossGradient(self, X, Y, Yhat):
         """
@@ -97,8 +98,9 @@ class HingeLoss(LossFunction):
         gradient of the loss associated with these predictions.
         """
 
-        ### TODO: YOUR CODE HERE
-        return - sum((Y - Yhat) * X.T, axis=1)
+        grad = -Y * X.T
+        grad[:, ((1 - (Y * Yhat)) < 0)] = 0
+        return sum(grad, axis=1)
 
 class LinearClassifier(BinaryClassifier):
     """
