@@ -16,7 +16,7 @@ class LossFunction:
         in Yhat; compute the loss associated with these predictions.
         """
 
-        return 0.5
+        # util.raiseNotDefined()
 
     def lossGradient(self, X, Y, Yhat):
         """
@@ -25,7 +25,7 @@ class LossFunction:
         gradient of the loss associated with these predictions.
         """
 
-        return 0.5
+        # util.raiseNotDefined()
 
 
 class SquaredLoss(LossFunction):
